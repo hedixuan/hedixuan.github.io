@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hedixuan/game-dev-skills/blob/main/skills/animation/ui-motion-design/playground/motion-preset.schema.json",
+  "title": "Game UI Motion Preset",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "presetId",
+    "name",
+    "category",
+    "intent",
+    "source",
+    "coordinateSystem",
+    "previewOverrides",
+    "durationMs",
+    "stages",
+    "parameters",
+    "tracks",
+    "implementationNotes",
+    "referenceViewport",
+    "repeat"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "string"
+    },
+    "presetId": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "enum": [
+        "feedback",
+        "transition",
+        "interaction",
+        "reward",
+        "system"
+      ]
+    },
+    "intent": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "coordinateSystem": {
+      "type": "string"
+    },
+    "previewOverrides": {
+      "type": "object",
+      "required": [
+        "intensity",
+        "playbackRate"
+      ],
+      "properties": {
+        "intensity": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.5
+        },
+        "playbackRate": {
+          "type": "number",
+          "minimum": 0.6,
+          "maximum": 1.6
+        }
+      },
+      "additionalProperties": false
+    },
+    "durationMs": {
+      "type": "number",
+      "minimum": 0
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "tracks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "target",
+          "role",
+          "startMs",
+          "durationMs",
+          "staggerMs",
+          "easing",
+          "iterations",
+          "keyframes"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "target": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "primary",
+              "secondary",
+              "fx"
+            ]
+          },
+          "startMs": {
+            "type": "number",
+            "minimum": 0
+          },
+          "durationMs": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "staggerMs": {
+            "type": "number",
+            "minimum": 0
+          },
+          "easing": {
+            "type": "string"
+          },
+          "iterations": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "keyframes": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "type": "object",
+              "properties": {
+                "at": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "rotate": {
+                  "type": "number"
+                },
+                "rotateY": {
+                  "type": "number"
+                },
+                "sx": {
+                  "type": "number"
+                },
+                "sy": {
+                  "type": "number"
+                },
+                "opacity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "blur": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "clipPath": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "at"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "implementationNotes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "referenceViewport": {
+      "type": "object",
+      "required": [
+        "width",
+        "height",
+        "unit"
+      ],
+      "properties": {
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "unit": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "repeat": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "enum": [
+            "once",
+            "interval"
+          ]
+        },
+        "pauseMs": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "interaction": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "pressable",
+            "click-feedback",
+            "popup-dismiss",
+            "list-scroll",
+            "coin-harvest",
+            "coin-tap",
+            "tabs",
+            "accordion",
+            "counter"
+          ]
+        },
+        "target": {
+          "type": "string"
+        },
+        "hint": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "sequence": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "destination": {
+          "type": "string"
+        },
+        "countIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "countMapping": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "spawnCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "animationType": {
+          "enum": [
+            "defult",
+            "scalebigger"
+          ]
+        },
+        "scatter": {
+          "type": "object",
+          "properties": {
+            "radius": {
+              "type": "number",
+              "minimum": 0
+            },
+            "randomScope": {
+              "type": "number",
+              "minimum": 0
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "scaleFrom": {
+              "type": "number",
+              "minimum": 0
+            },
+            "scalePeak": {
+              "type": "number",
+              "minimum": 0
+            },
+            "settleScale": {
+              "type": "number",
+              "minimum": 0
+            },
+            "positionSpace": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "wait": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "flight": {
+          "type": "object",
+          "properties": {
+            "pathType": {
+              "enum": [
+                "quadratic-bezier",
+                "cubic-bezier",
+                "linear"
+              ]
+            },
+            "controlPoint": {
+              "type": "string"
+            },
+            "durationMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "scaleTo": {
+              "type": "number",
+              "minimum": 0
+            },
+            "endOvershoot": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "opacityTo": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "lineType": {
+              "enum": [
+                "bezier",
+                "beeline"
+              ]
+            },
+            "arcHeight": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": true
+        },
+        "arrival": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "sourceApiConcepts": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "from": {
+          "type": "number"
+        },
+        "to": {
+          "type": "number"
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "easing": {
+          "type": "string"
+        },
+        "update": {
+          "type": "string"
+        },
+        "finalValueSource": {
+          "type": "string"
+        },
+        "value": {
+          "type": "number"
+        },
+        "commit": {
+          "type": "string"
+        },
+        "repeat": {
+          "type": "string"
+        },
+        "feedback": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
