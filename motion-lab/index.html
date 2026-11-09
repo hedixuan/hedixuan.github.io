@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d14">
+  <title>Motion Lab · 游戏 UI 动效实验室</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./index.html" aria-label="Motion Lab 首页">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span><strong>MOTION LAB</strong><small>GAME UI ANIMATION LIBRARY</small></span>
+      </a>
+      <div class="topbar-center"><span class="status-dot"></span> INTERACTIVE PREVIEW <i></i> PARAMETER EXPORT</div>
+      <div class="topbar-right"><span class="version-chip">UI MOTION <b>1.3.0</b></span><a class="repo-link" href="https://github.com/hedixuan/game-dev-skills/blob/main/skills/animation/ui-motion-design/SKILL.md" target="_blank" rel="noreferrer">SKILL DOC ↗</a></div>
+    </header>
+
+    <main class="workspace">
+      <aside class="library-panel">
+        <div class="panel-heading">
+          <div><span class="eyebrow">MOTION COLLECTION</span><h1>动效模板</h1></div>
+          <span id="preset-count" class="count-badge">22</span>
+        </div>
+        <p class="library-intro">按类别筛选或搜索模板。列表独立滚动，选择时舞台保持在原位。</p>
+        <div class="library-tools">
+          <label class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <input id="preset-search" type="search" placeholder="搜索名称或关键词…" autocomplete="off" aria-label="搜索动效模板">
+            <button id="clear-search" type="button" aria-label="清空搜索" hidden>×</button>
+          </label>
+          <div class="library-list-meta"><span id="library-result-count">22 个模板</span><span>快捷键 /</span></div>
+        </div>
+        <div class="filter-row" role="group" aria-label="动效分类筛选">
+          <button class="filter-chip active" data-filter="all">全部 <span data-filter-count="all">22</span></button>
+          <button class="filter-chip" data-filter="feedback">反馈 <span data-filter-count="feedback"></span></button>
+          <button class="filter-chip" data-filter="transition">转场 <span data-filter-count="transition"></span></button>
+          <button class="filter-chip" data-filter="interaction">交互 <span data-filter-count="interaction"></span></button>
+          <button class="filter-chip" data-filter="reward">收获 <span data-filter-count="reward"></span></button>
+          <button class="filter-chip" data-filter="system">系统 <span data-filter-count="system"></span></button>
+        </div>
+        <nav id="preset-list" class="preset-list" aria-label="动效模板列表"></nav>
+        <div class="library-footer">
+          <span class="footer-line"></span>
+          <p>每个模板均包含动作阶段、轨道参数与验收重点。网页预览用于表达设计意图，不等同于目标引擎实测。</p>
+        </div>
+      </aside>
+
+      <section class="preview-column">
+        <div class="preview-heading">
+          <div>
+            <div class="breadcrumb"><span>LIBRARY</span><b>/</b><span id="active-category">FEEDBACK</span></div>
+            <h2 id="active-title">脉冲确认</h2>
+            <p id="active-desc">快速确认输入，以受力、释放和回稳完成一次有力度的反馈。</p>
+          </div>
+          <div class="preview-actions">
+            <div class="preset-stepper" role="group" aria-label="切换模板">
+              <button id="previous-preset" class="icon-btn" type="button" title="上一个模板" aria-label="上一个模板">‹</button>
+              <button id="next-preset" class="icon-btn" type="button" title="下一个模板" aria-label="下一个模板">›</button>
+            </div>
+            <button id="replay-btn" class="primary-btn"><span class="play-icon">▶</span> 重播</button>
+            <button id="reset-btn" class="icon-btn" title="重置预览与参数" aria-label="重置预览与参数">↺</button>
+          </div>
+        </div>
+
+        <div id="interaction-hint" class="interaction-hint" hidden>
+          <span class="interaction-hint-icon">i</span>
+          <span><b>使用提示</b><small id="interaction-hint-text"></small></span>
+        </div>
+        <div class="stage-frame">
+          <div class="stage-topline"><span><i class="live-dot"></i> LIVE STAGE</span><span id="stage-index">01 / 22</span><span>INTERACTIVE PREVIEW</span></div>
+          <div id="stage" class="stage" aria-live="off"></div>
+          <div class="stage-bottomline"><span id="stage-purpose">INPUT FEEDBACK</span><span><b>WEB PREVIEW</b> · CSS / WEB ANIMATIONS</span></div>
+        </div>
+
+        <div class="timeline-panel">
+          <div class="timeline-heading"><div><span class="eyebrow">MOTION SEQUENCE</span><h3>动作编排</h3></div><span id="duration-label" class="duration-label">TOTAL 520 MS</span></div>
+          <div id="timeline" class="timeline"></div>
+          <div class="timeline-legend"><span><i class="legend-primary"></i> 主动作</span><span><i class="legend-secondary"></i> 次动作</span><span><i class="legend-fx"></i> 动态表现</span></div>
+        </div>
+      </section>
+
+      <aside class="inspector-panel">
+        <div class="inspector-heading"><div><span class="eyebrow">MOTION INSPECTOR</span><h2>参数面板</h2></div><span class="inspector-icon">⌘</span></div>
+
+        <section class="control-section">
+          <div class="section-title"><span>预览调节</span><small>LIVE OVERRIDE</small></div>
+          <label class="range-control"><span>动作力度 <b id="intensity-value">100%</b></span><input id="intensity" type="range" min="50" max="150" value="100"><small>调整位移、旋转与形变幅度</small></label>
+          <label class="range-control"><span>播放节奏 <b id="speed-value">1.0×</b></span><input id="speed" type="range" min="60" max="160" value="100"><small>影响所有轨道的持续时间与延迟</small></label>
+          <button id="apply-btn" class="secondary-btn">应用并重播 <span>↗</span></button>
+        </section>
+
+        <section class="control-section parameter-section">
+          <div class="section-title"><span>核心参数</span><small>PRESET VALUES</small></div>
+          <div id="parameter-list" class="parameter-list"></div>
+        </section>
+
+        <section class="control-section track-section">
+          <div class="section-title"><span>轨道清单</span><small id="track-count">04 TRACKS</small></div>
+          <div id="track-list" class="track-list"></div>
+        </section>
+
+        <section class="export-section">
+          <div class="export-heading"><span class="eyebrow">FOR YOUR AGENT</span><h3>导出复刻资料</h3><p>将动效规格交给游戏开发 Agent，作为实现参考与验收依据。</p></div>
+          <button id="copy-json" class="export-btn"><span class="export-symbol">{ }</span><span><b>复制参数 JSON</b><small>完整轨道、关键帧与参数</small></span><kbd>JSON</kbd></button>
+          <button id="copy-spec" class="export-btn"><span class="export-symbol">≡</span><span><b>复制动效规格</b><small>动作意图、时间轴、参数说明</small></span><kbd>MD</kbd></button>
+          <button id="copy-prompt" class="export-btn"><span class="export-symbol">✳</span><span><b>复制 Agent 复刻指令</b><small>实现步骤与验收要求</small></span><kbd>TXT</kbd></button>
+        </section>
+      </aside>
+    </main>
+    <footer class="app-footer"><span>GAME DEV SKILLS <b>/</b> UI MOTION DESIGN</span><span>PARAMETERS ARE STARTING POINTS · VERIFY IN TARGET COCOS PROJECT</span><span>BUILT FOR PLAY, NOT JUST TWEENS</span></footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
